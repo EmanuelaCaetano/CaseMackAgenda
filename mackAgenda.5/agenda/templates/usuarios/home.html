@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Tarefas</title>
+    <style>
+        /* Estilização da barra superior */
+        .top-bar {
+            background-color: #e60022; /* Cor da barra */
+            height: 100px; /* Altura da barra */
+            width: 100%; /* Largura da barra */
+            position: fixed; /* Fixa a barra no topo */
+            top: 0; /* Posiciona a barra no topo */
+            left: 0; /* Alinha a barra à esquerda */
+            z-index: 1000; /* Garante que a barra fique acima de outros elementos */
+            display: flex; /* Usado para alinhar itens na barra */
+            align-items: center; /* Alinha verticalmente os itens */
+            padding-left: 20px; /* Espaçamento à esquerda */
+        }
+
+        /* Estilização da imagem */
+        .top-bar img {
+            height: 80px; /* Altura da imagem */
+        }
+
+        /* Estilização do corpo */
+        body {
+            margin: 0; /* Remove margens padrão do body */
+            font-family: Arial, sans-serif; /* Fonte do corpo */
+        }
+
+        /* Estilização da área abaixo da navbar */
+        .content {
+            padding-top: 100px; /* Espaço igual à altura da navbar */
+            height: calc(100vh - 100px); /* Altura ajustada para ocupar o restante da tela */
+            background-image: url('https://uploads.metroimg.com/wp-content/uploads/2022/01/19125054/foto-capa-1200x800-talvez.jpg'); /* Imagem de fundo */
+            background-size: cover; /* Cobre todo o fundo */
+            background-position: center; /* Centraliza a imagem de fundo */
+            display: flex; /* Flexbox para centralizar o conteúdo */
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+        }
+
+        /* Estilização do quadrado com bordas arredondadas */
+        .welcome-box {
+            background-color: white; /* Fundo branco sem transparência */
+            padding: 40px; /* Espaçamento interno */
+            border-radius: 20px; /* Bordas arredondadas */
+            width: 400px; /* Largura do quadrado */
+            text-align: center; /* Centraliza o texto */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar o quadrado */
+        }
+
+        /* Estilização do título */
+        .welcome-box h1 {
+            color: #e60022; /* Cor do título */
+            font-size: 24px; /* Tamanho do título */
+            margin-bottom: 20px; /* Espaçamento abaixo do título */
+        }
+
+        /* Estilização do texto */
+        .welcome-box p {
+            color: #333; /* Cor do texto */
+            font-size: 16px; /* Tamanho da fonte */
+            line-height: 1.5; /* Altura da linha para melhor legibilidade */
+            text-align: justify; /* Justifica o texto */
+        }
+
+        /* Estilização dos botões */
+        .button-container {
+            margin-top: 20px; /* Espaçamento acima dos botões */
+            display: flex; /* Flexbox para alinhar os botões */
+            justify-content: space-between; /* Espaça os botões uniformemente */
+        }
+
+        .button-container a {
+            width: 48%; /* Largura dos botões */
+            padding: 10px; /* Espaçamento interno */
+            background-color: #e60022; /* Cor de fundo dos botões */
+            color: white; /* Cor do texto dos botões */
+            text-align: center; /* Centraliza o texto */
+            border-radius: 20px; /* Bordas arredondadas */
+            text-decoration: none; /* Remove sublinhado */
+            font-size: 16px; /* Tamanho da fonte */
+            margin: 0 5px; /* Espaçamento entre os botões */
+        }
+
+        .button-container a:hover {
+            background-color: #c5001a; /* Cor ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <img src="https://seeklogo.com/images/U/universidade-presbiteriana-mackenzie-logo-2CF381A245-seeklogo.com.png" alt="Logo da Universidade Presbiteriana Mackenzie">
+    </div>
+
+    <div class="content">
+        <div class="welcome-box">
+            <h1>Bem-vindo, Mackenzista!</h1>
+            <p>
+                A Agenda Mackenzista é uma ferramenta de organização dedicada aos alunos da Universidade Presbiteriana Mackenzie. 
+                Ela ajuda a gerenciar compromissos, atividades e prazos acadêmicos, facilitando sua rotina e garantindo que você tenha 
+                tudo sob controle ao longo do seu curso.
+            </p>
+
+            <div class="button-container">
+                <!-- Django URL para a página de login -->
+                <a href="{% url 'login' %}">Login</a>
+                
+                <!-- Django URL para a página de cadastro -->
+                <a href="{% url 'cadastro' %}">Cadastro</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+

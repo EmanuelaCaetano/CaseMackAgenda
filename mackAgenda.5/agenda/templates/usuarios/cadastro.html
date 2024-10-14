@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <style>
+        /* Estilos para o plano de fundo */
+        body {
+            background-image: url('https://uploads.metroimg.com/wp-content/uploads/2022/01/19125054/foto-capa-1200x800-talvez.jpg');
+            background-size: cover; /* Ajustando a imagem para cobrir toda a tela */
+            background-repeat: no-repeat; /* Evita a repetição da imagem */
+            background-position: center; /* Centraliza a imagem */
+            margin: 0; /* Remove a margem padrão do body */
+            font-family: Arial, sans-serif; /* Definindo a fonte padrão */        
+        }
+
+        /* Estilos para a barra de navegação */
+        .navbar {
+            background-color: #e60022;
+            height: 120px; /* Dobrando a altura da barra */
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+        }
+
+        .navbar img {
+            height: 100px; /* Ajustando a altura da imagem */
+            margin-right: 20px; /* Espaço entre a imagem e o restante da barra */
+        }
+
+        /* Centralizando o container de cadastro */
+        .form-container {
+            max-width: 350px; /* Diminuindo o tamanho do container */
+            margin: 60px auto; /* Centralizando na página e descendo um pouco mais */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombras para o efeito */
+            background-color: #ffffff; /* Fundo branco sólido */
+        }
+
+        /* Estilo para o título */
+        h2 {
+            text-align: center; /* Centralizando o título */
+        }
+
+        /* Estilo para os campos de entrada */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block; /* Fazendo os rótulos ocuparem uma linha inteira */
+            margin-bottom: 5px; /* Espaço entre o rótulo e o campo */
+            font-weight: bold; /* Deixando o texto do rótulo em negrito */
+            margin-left: 5px; /* Alinhando rótulos à esquerda */
+        }
+
+        .input-group input {
+            width: calc(100% - 10px); /* Reduzindo a largura do campo para se ajustar ao padding */
+            padding: 8px; /* Reduzido o padding */
+            border: 1px solid #ccc;
+            border-radius: 25px; /* Deixando os campos arredondados */
+            display: block; /* Fazendo o campo ocupar uma linha inteira */
+            margin-left: 5px; /* Alinhando os campos de entrada à esquerda */
+        }
+
+        /* Estilo para o botão de cadastro */
+        .btn {
+            background-color: #e60022; /* Mesma cor da barra */
+            color: white;
+            padding: 12px 20px; /* Aumentando o tamanho do botão */
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 90%; /* Largura do botão */
+            margin: 20px auto; /* Centralizando o botão com margens */
+            display: block; /* Fazendo o botão ocupar uma linha inteira */
+            transition: transform 0.3s ease, background-color 0.3s ease; /* Transição suave para efeito de hover */
+        }
+
+        /* Efeito ao passar o mouse no botão */
+        .btn:hover {
+            transform: scale(1.1); /* Aumenta um pouco de tamanho */
+            background-color: #cc0000; /* Novo tom de vermelho ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="navbar">
+            <img src="https://seeklogo.com/images/U/universidade-presbiteriana-mackenzie-logo-2CF381A245-seeklogo.com.png" alt="Mackenzie Logo">
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>Cadastro</h2>
+            <form method="post" action="{% url 'cadastro' %}"> <!-- Altere para o nome correto da URL -->
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="ra">RA</label>
+                    <input type="text" id="ra" name="ra" required>
+                </div>
+                <div class="input-group">
+                    <label for="password1">Senha</label>
+                    <input type="password" id="password1" name="password1" required>
+                </div>
+                <div class="input-group">
+                    <label for="password2">Confirme a Senha</label>
+                    <input type="password" id="password2" name="password2" required>
+                </div>
+                {% if error %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endif %}
+                <button type="submit" class="btn">Cadastrar</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html> 

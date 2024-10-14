@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarefas Salvas</title>
+    <style>
+        /* Estilização da barra superior */
+        .top-bar {
+            background-color: #e60023; /* Cor da barra */
+            height: 80px; /* Altura da barra */
+            width: 100%; /* Largura da barra */
+            position: fixed; /* Fixa a barra no topo */
+            top: 0; /* Posiciona a barra no topo */
+            left: 0; /* Alinha a barra à esquerda */
+            z-index: 1000; /* Garante que a barra fique acima de outros elementos */
+            display: flex; /* Usado para alinhar itens na barra */
+            align-items: center; /* Alinha verticalmente os itens */
+            padding-left: 20px; /* Espaçamento à esquerda */
+            padding-right: 20px; /* Espaçamento à direita */
+        }
+        
+        /* Estilização da imagem */
+        .top-bar img {
+            height: 60px; /* Altura da imagem */
+            margin: 0; /* Remove a margem */
+        }
+        
+        .username-display {
+            flex: 1; /* Para que o nome ocupe o espaço restante */
+            text-align: center; /* Centraliza o texto */
+            color: white; /* Cor do texto */
+            font-size: 18px; /* Tamanho da fonte */
+        }
+        
+
+        /* Estilização do botão de logout no canto inferior esquerdo */
+        .logout-button {
+            position: fixed;
+            bottom: 20px; /* Posiciona 20px acima do rodapé */
+            left: 20px; /* Posiciona 20px à esquerda */
+            background-color: transparent; /* Fundo transparente */
+            color: #e60023; /* Texto vermelho */
+            border: 2px solid #e60023; /* Borda vermelha */
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 20px; /* Bordas arredondadas */
+        }
+
+        .logout-button:hover {
+            background-color: #f0f0f0; /* Fundo cinza claro ao passar o mouse */
+        }
+
+        /* Estilização do container */
+        .container {
+            width: 80%;
+            margin: 100px auto 0;
+        }
+
+        .form-container, .task-list {
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        h2, h3 {
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        /* Task List Scroll Horizontal */
+        .task-list {
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            white-space: nowrap;
+            overflow-x: auto;
+            display: flex;
+            gap: 20px;
+        }
+
+        .task-container {
+            min-width: 250px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            display: inline-block;
+            background-color: #f9f9f9;
+        }
+
+        /* Estilização dos botões sem borda e arredondados */
+        button {
+            padding: 10px 20px;
+            border: none; /* Remove a borda */
+            border-radius: 20px; /* Bordas arredondadas */
+            color: white;
+        }
+
+        /* Botão criar em vermelho */
+        .create-button {
+            background-color: red;
+            display: block;
+            margin: 0 auto; /* Centraliza o botão */
+        }
+
+        /* Botões editar e excluir */
+        .edit-button {
+            background-color: #4a90e2; /* Azul mais sutil */
+        }
+
+        .delete-button {
+            background-color: red;
+        } 
+
+        
+
+
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <img src="https://seeklogo.com/images/U/universidade-presbiteriana-mackenzie-logo-2CF381A245-seeklogo.com.png" alt="Logo da Universidade Presbiteriana Mackenzie">
+        <div class="username-display">
+        
+            {% if user.is_authenticated %}
+            <span>Bem-vindo, {{ user.username }}</span>
+            {% else %}
+                <span>Usuário não logado</span>
+            {% endif %}
+        </div>
+        
+    </div>
+
+    <div class="container">
+        <h2>Tarefas</h2>
+        <!-- Exibe o nome do usuário logado no centro da barra -->
+
+        <!-- Formulário para adicionar nova tarefa -->
+        <div class="form-container">
+            <h3>Adicionar Uma Nova Tarefa Academica</h3>
+            <form action="{% url 'criar_tarefa' %}" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="button-container">
+                    <button type="submit" class="create-button">Criar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Container das tarefas com scroll horizontal -->
+        <div class="task-list" id="taskListContainer">
+            <h3>Tarefas</h3>
+            {% if tarefas %}
+                {% for tarefa in tarefas %}
+                <div class="task-container">
+                    <strong>Disciplina:</strong> {{ tarefa.disciplina }}<br>
+                    <strong>Data:</strong> {{ tarefa.data }}<br>
+                    <strong>Descrição:</strong> {{ tarefa.descricao }}<br>
+
+                    <!-- Botões Editar e Excluir -->
+                    <div class="button-container">
+                        <form action="{% url 'editar_tarefa' tarefa.id %}" method="get" style="display:inline;">
+                            <button type="submit" class="edit-button">Editar</button>
+                        </form>
+                        <form action="{% url 'excluir_tarefa' tarefa.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-button">Excluir</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>Nenhuma tarefa salva.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Botão de Logout no canto inferior esquerdo -->
+    <form action="{% url 'sair' %}" method="get" style="display:inline;">
+        <button type="submit" class="logout-button">Sair</button>
+    </form>
+
+</body>
+</html>
